@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lingeries do Brasil</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+ 
+
+<header>
+  <a href="index.html">
+    <div class="logo">
+      <img src="img/logo.jpg" alt="Logo da loja">
+  </a>
+    </div>
+
+    <h1 class="nome">Lingeries do Brasil</h1>
+
+    <nav class="menu">
+      <a href="#contato">Contato</a>
+      <a href="loginadm.html">ADM</a>
+    </nav>
+
+</header>
+
+<section class="banner">
+  <img src="img/banner1.jpeg" alt="Banner da loja">
+</section>
+
+<h2 class="texto">Mais vendidos</h2>
+
+<div id="produtos"></div>
+
+<section class="produtos">
+
+  <!-- Produto 1 -->
+  
+  <div class="produto">
+    <a href="produto1.html">
+    <img src="img/calcinha básica.png">
+    <h3>Calcinha Básica Sem Costura Feminina Lupo</h3>
+    <p>R$ 47,83</p> </a>
+  </div>
+
+  <div class="produto">
+    <a href="produto2.html">
+    <img src="img/calcinha angel.png">
+    <h3>Calcinha Angel Sem Costura Feminina Lupo</h3>
+    <p>R$ 44.97</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto3.html">
+    <img src="img/calciinha algodção.png">
+    <h3>Calcinha Clássica Algodão Feminina Lupo</h3>
+    <p>R$ 41,51</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto4.html">
+    <img src="img/top basico.png">
+    <h3>Sutiã Básico Sem Costura Feminino Lupo</h3>
+    <p>R$ 48,84</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto5.html">
+    <img src="img/top angel.png">
+    <h3>Sutiã Angel Sem Costura Feminino Lupo</h3>
+    <p>R$ 52,80</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto6.html">
+    <img src="img/top power.png">
+    <h3>Top Power Feminino Lupo</h3>
+    <p>R$ 57,18</p> </a>
+  </div>
+
+  <div class="produto">
+    <a href="produto7.html">
+    <img src="img/cueca box microf.png">
+    <h3>Boxer Microfibra Sem Costura</h3>
+    <p>R$ 42,22</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto8.html">
+    <img src="img/cueca algodão.png">
+    <h3>Boxer Algodão com Elastano Masculina Lupo</h3>
+    <p>R$ 35,62</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto9.html">
+    <img src="img/cueca slip.png">
+    <h3>Cueca Slip Microfibra Masculina Lupo</h3>
+    <p>R$ 44,14</p></a>
+  </div>
+
+  <div class="produto">
+    <a href="produto10.html">
+    <img src="img/Meia.png">
+    <h3>Kit 3 Meias Cano Curto Algodão Unissex Lupo</h3>
+    <p>R$ 41,38</p></a>
+  </div>
+
+</section>
+
+
+<script>
+async function carregarProdutos() {
+  const res = await fetch('http://localhost:3000/produtos');
+  const produtos = await res.json();
+
+  document.getElementById('produtos').innerHTML = produtos.map(p => `
+    <div>
+      <h3>${p.nome}</h3>
+      <img src="${p.imagem}" width="100" />
+      <p>R$ ${p.preco}</p>
+    </div>
+  `).join('');
+}
+
+async function addProduto() {
+  await fetch('http://localhost:3000/produtos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      nome: document.getElementById('nome').value,
+      preco: document.getElementById('preco').value,
+      imagem: document.getElementById('imagem').value
+    })
+  });
+
+  carregarProdutos();
+}
+
+async function comprar() {
+  const metodo = document.getElementById('pagamento').value;
+
+  const res = await fetch('http://localhost:3000/pedido', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ total: 100, metodo_pagamento: metodo })
+  });
+
+  const data = await res.json();
+
+  if (data.pix_qrcode) {
+    document.getElementById('resultado').innerHTML = `<img src="${data.pix_qrcode}" />`;
+  } else if (data.boleto_link) {
+    document.getElementById('resultado').innerHTML = `<a href="${data.boleto_link}" target="_blank">Gerar Boleto</a>`;
+  }
+}
+
+carregarProdutos();
+</script>
+
+</body>
+
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- WhatsApp -->
+    <div class="footer-box" id="contato">
+      <h3>WhatsApp</h3>
+      <a href=" https://wa.me/558197153960" target="_blank">
+        Fale conosco
+      </a>
+    </div>
+
+    <!-- Instagram -->
+    <div class="footer-box">
+      <h3>Instagram</h3>
+      <a href="https://www.instagram.com/lingeries.do.brasil?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+        @lingeries.do.brasil
+      </a>
+    </div>
+
+    <!-- Horário -->
+    <div class="footer-box">
+      <h3>Horários</h3>
+      <p>Dom - Qui: 09h às 20:30h</p>
+      <p>Sex - Sáb: 09h às 21:30h</p>
+    </div>
+
+  </div>
+
+  
+
+</footer>
+</html>
+

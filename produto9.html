@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lingeries do Brasil</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<header>
+  <a href="index.html">
+    <div class="logo">
+      <img src="img/logo.jpg" alt="Logo da loja">
+  </a>
+    </div>
+
+    <h1 class="nome">Lingeries do Brasil</h1>
+
+    <nav class="menu">
+      <a href="#contato">Contato</a>
+    </nav>
+
+</header>
+<button onclick="history.back()" class="btn-voltar">
+    ← Voltar
+</button>
+<body class="paginaprodutos">
+
+<div class="container">
+
+  <!-- IMAGENS -->
+  <div class="imagens">
+    <img src="img/cueca slip.png" id="imgPrincipal">
+    <br><br>
+    <img src="img/cueca slip.png" onclick="trocarImg(this.src)">
+  </div>
+
+  <!-- INFORMAÇÕES -->
+  <div class="info">
+    <h1>Cueca Slip Microfibra Masculina Lupo</h1>
+    <p class="preco">R$ 44,14</p>
+
+    <p>Cueca Slip Microfibra </p>
+
+  <p>Preço unitário: R$ <span id="preco">47,83</span></p>
+
+<div class="quantidade">
+  <button onclick="diminuir()">-</button>
+  <input type="number" id="qtd" value="1" min="1" oninput="atualizarTotal()">
+  <button onclick="aumentar()">+</button>
+</div>
+
+<h2>Total: R$ <span id="total">44,14</span></h2>
+
+   <a href=" https://wa.me/558197153960" target="_blank" class="botaocomprar">Comprar agora
+      </a>
+
+  </div>
+
+</div>
+
+<script>
+// trocar imagem
+function trocarImg(src) {
+  document.getElementById("imgPrincipal").src = src;
+}
+
+
+let preco = 44.14;
+
+function atualizarTotal() {
+  let qtd = parseInt(document.getElementById("qtd").value) || 1;
+  let total = preco * qtd;
+
+  document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function aumentar() {
+  let qtd = document.getElementById("qtd");
+  qtd.value = parseInt(qtd.value) + 1;
+  atualizarTotal();
+}
+
+function diminuir() {
+  let qtd = document.getElementById("qtd");
+  if (qtd.value > 1) {
+    qtd.value = parseInt(qtd.value) - 1;
+    atualizarTotal();
+  }
+}
+
+
+
+// inicializa valor correto
+atualizarTotal();
+
+
+</script>
+
+
+
+</body>
